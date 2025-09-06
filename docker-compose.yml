@@ -1,0 +1,46 @@
+name: eDziennik
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    hostname: db
+    restart: always
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', '${DB_USER}']
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - edziennik-network
+  edziennik:
+    container_name: eDziennik
+    build: .
+    hostname: edziennik
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '80:80'
+    depends_on:
+      - db
+    network_mode: host
+    networks:
+      - edziennik-network
+
+networks:
+  edziennik-network:
+    name: edziennik-network
+    driver: bridge
+    internal: true
+
+volumes:
+  db_data:
+    name: db_data
