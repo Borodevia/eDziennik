@@ -1,29 +1,47 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.addMissingImports": "always",
-    "source.fixAll.eslint": "always",
-    "source.organizeImports": "always",
-    "source.sort.json": "always"
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.detectIndentation": false,
-  "editor.formatOnSave": true,
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "editor.rulers": [80, 120],
-  "editor.tabSize": 2,
-  "editor.trimAutoWhitespace": true,
-  "eslint.enable": true,
-  "eslint.format.enable": true,
-  "files.encoding": "utf8",
-  "files.eol": "\n",
-  "files.trimTrailingWhitespace": true,
-  "git.autofetch": true,
-  "search.exclude": {
-    "**/.vscode": true,
-    "**/node_modules": true
-  },
-  "search.useGlobalIgnoreFiles": true,
-  "search.useParentIgnoreFiles": true
+	"editor.codeActionsOnSave": {
+		"source.addMissingImports": "always",
+		"source.fixAll.eslint": "always",
+		"source.organizeImports": "always",
+		"source.sort.json": "always"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.detectIndentation": false,
+	"editor.formatOnSave": true,
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"editor.rulers": [
+		80,
+		120
+	],
+	"editor.tabSize": 2,
+	"editor.trimAutoWhitespace": true,
+	"eslint.enable": true,
+	"eslint.format.enable": true,
+	"files.encoding": "utf8",
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+	"git.autofetch": true,
+	"search.exclude": {
+		"**/.vscode": true,
+		"**/node_modules": true
+	},
+	"search.useGlobalIgnoreFiles": true,
+	"search.useParentIgnoreFiles": true,
+	"[yaml]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"prettier.bracketSameLine": false,
+	"prettier.bracketSpacing": true,
+	"prettier.configPath": ".prettierrc",
+	"prettier.enable": true,
+	"prettier.jsxSingleQuote": true,
+	"prettier.printWidth": 80,
+	"prettier.quoteProps": "as-needed",
+	"prettier.semi": true,
+	"prettier.singleQuote": true,
+	"prettier.tabWidth": 2,
+	"prettier.trailingComma": "es5",
+	"prettier.useTabs": false
 }

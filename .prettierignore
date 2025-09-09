@@ -6,3 +6,4 @@ build
 *.lock
 package-lock.json
 bun.lockb
+.vscode
