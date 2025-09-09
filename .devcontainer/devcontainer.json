@@ -1,21 +1,41 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/marcosgomesneto/bun-devcontainers/tree/main/src/basic-bun
+// README at: https://github.com/marcosgomesneto/bun-devcontainers/tree/main/src/bun-postgresql
 {
-  "name": "Bun",
-  "dockerFile": "Dockerfile",
-  // Configure tool-specific properties.
-  "customizations": {
-    // Configure properties specific to VS Code.
-    "vscode": {
-      // Add the IDs of extensions you want installed when the container is created.
-      "extensions": [
-        "oven.bun-vscode"
-      ]
-    }
-},
-"features": {
-	"ghcr.io/devcontainers/features/common-utils:2": {},
-	"ghcr.io/devcontainers/features/git-lfs:1": {},
-	"ghcr.io/devcontainers/features/github-cli:1": {}
-}
+	"containerEnv": {
+		"DB_NAME": "${localEnv:DB_NAME}",
+		"DB_PASS": "${localEnv:DB_PASS}",
+		"DB_USER": "${localEnv:DB_USER}"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [8080, 5432],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "bun install",
+	// Configure tool-specific properties.
+	// "customizations": {},
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+	"dockerComposeFile": "docker-compose.yml",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/git-lfs:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+	"name": "Bun & PostgreSQL",
+	"secrets": {
+		"DB_NAME": {},
+		"DB_PASS": {},
+		"DB_USER": {}
+	},
+	"service": "devcontainer",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 }
