@@ -10,8 +10,13 @@ updates:
     schedule:
       interval: 'weekly'
     open-pull-requests-limit: 2
+  - package-ecosystem: 'devcontainers' # See documentation for possible values
+    directory: '/' # Location of package manifests
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 1
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-    open-pull-requests-limit: 2
+    open-pull-requests-limit: 1
