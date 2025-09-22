@@ -1,9 +1,0 @@
-node_modules
-dist
-build
-*.log
-.DS_Store
-*.lock
-package-lock.json
-bun.lockb
-.vscode
