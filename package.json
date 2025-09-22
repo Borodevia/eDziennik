@@ -1,33 +1,31 @@
 {
-  "name": "bun-react-template",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "bun --hot src/index.tsx",
-    "start": "NODE_ENV=production bun src/index.tsx",
-    "build": "bun run build.ts"
-  },
-  "dependencies": {
-    "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-select": "^2.2.5",
-    "@radix-ui/react-slot": "^1.2.3",
-    "bun-plugin-tailwind": "^0.0.15",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
-    "lucide-react": "^0.525.0",
-    "react": "^19",
-    "react-day-picker": "^9.10.0",
-    "react-dom": "^19",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "devDependencies": {
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@types/bun": "latest"
-  }
+	"dependencies": {
+		"next": "15.5.3",
+		"react": "19.1.0",
+		"react-dom": "19.1.0"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3",
+		"@tailwindcss/postcss": "^4",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"eslint": "^9",
+		"eslint-config-next": "15.5.3",
+		"prettier": "^3.6.2",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"prettier-plugin-tailwindcss": "^0.6.14",
+		"tailwindcss": "^4",
+		"typescript": "^5"
+	},
+	"name": "edziennik",
+	"private": true,
+	"scripts": {
+		"build": "next build --turbopack",
+		"dev": "next dev --turbopack",
+		"format": "prettier --write .",
+		"lint": "eslint",
+		"start": "next start"
+	},
+	"version": "0.1.0"
 }
