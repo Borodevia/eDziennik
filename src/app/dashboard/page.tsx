@@ -1,10 +1,14 @@
 import { Card } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  TypographyH3,
+  TypographyMedium,
+  TypographyMuted
+} from "@/components/ui/typography";
+import { formatTime, getEarliestTime, getLatestTime, parseTime, type Lesson } from "@/lib/timetable-utils";
 
-export default function Home() {
-
-  const timetableData = [
-    {
+const data = {
+    timetable: [
+      {
       lessonNumber: 1,
       startTime: "8:00",
       endTime: "8:45",
@@ -52,48 +56,66 @@ export default function Home() {
       teacher: "E. Zielińska",
       subject: "Język angielski"
     }
-  ];
+    ]
+  }
+
+export function generateTimeLabels(lessons: Lesson[]): string[] {
+  const startHour = getEarliestTime(lessons);
+  const endhour = getLatestTime(lessons);
+
+const startRounded =
+}
+
+export default function Home() {
+  // Test the time utilities
+  const lessons = data.timetable as Lesson[];
+  const earliest = getEarliestTime(lessons);
+  const latest = getLatestTime(lessons);
+
+  console.log("Earliest time:", earliest, "minutes =", formatTime(earliest));
+  console.log("Latest time:", latest, "minutes =", formatTime(latest));
+  console.log("parseTime('8:00'):", parseTime("8:00"));
+  console.log("parseTime('13:15'):", parseTime("13:15"));
 
   return (
     <div className="grid grid-cols-2 grid-rows-2 h-full p-4 gap-4">
       <Card className="p-6">
-        <h2 className="text-xl font-semibold mb-4">Oceny</h2>
-        <div className="text-gray-600">Twoje najnowsze oceny</div>
+        <TypographyH3 className="mb-4">Oceny</TypographyH3>
+        <TypographyMuted>Twoje najnowsze oceny</TypographyMuted>
       </Card>
-      <Card className="row-span-2 p-6">
-        <h2 className="text-xl font-semibold mb-4">Plan Lekcji</h2>
-        <div className="overflow-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[60px]">Nr</TableHead>
-                <TableHead className="w-[80px]">Godziny</TableHead>
-                <TableHead className="w-[60px]">Sala</TableHead>
-                <TableHead className="w-[120px]">Nauczyciel</TableHead>
-                <TableHead>Przedmiot</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {timetableData.map((lesson) => (
-                <TableRow key={lesson.lessonNumber}>
-                  <TableCell className="font-medium">{lesson.lessonNumber}</TableCell>
-                  <TableCell className="text-sm">
-                    <div>{lesson.startTime}</div>
-                    <div className="text-gray-500">{lesson.endTime}</div>
-                  </TableCell>
-                  <TableCell>{lesson.roomNumber}</TableCell>
-                  <TableCell className="text-sm">{lesson.teacher}</TableCell>
-                  <TableCell className="font-medium">{lesson.subject}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+      <Card className="row-span-2 p-6 flex flex-col">
+        <TypographyH3 className="mb-4">Plan Lekcji</TypographyH3>
+        <div className="flex flex-row overflow-y-auto max-h-[60vh]">
+          <div className="w-[40px]">
+            <TypographyMuted className="h-[80px]">8.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">9.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">10.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">11.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">12.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">13.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">14.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">15.00</TypographyMuted>
+            <TypographyMuted className="h-[80px]">16.00</TypographyMuted>
+          </div>
+          <div className="flex flex-col">
+            {data.timetable.map((lesson) => (
+            <div className="flex flex-row p-2" key={lesson.lessonNumber}>
+              <div className="text-sm">
+                <TypographyMedium>{lesson.subject}</TypographyMedium>
+                <TypographyMuted>{lesson.startTime} - {lesson.endTime} • Sala {lesson.roomNumber}</TypographyMuted>
+                <TypographyMuted>{lesson.teacher} </TypographyMuted>
+              </div>
+            </div>
+          ))}
+          </div>
         </div>
       </Card>
       <Card className="p-6">
-        <h2 className="text-xl font-semibold mb-4">Sprawdziany</h2>
-        <div className="text-gray-600">Nadchodzące sprawdziany</div>
+        <TypographyH3 className="mb-4">Sprawdziany</TypographyH3>
+        <TypographyMuted>Nadchodzące sprawdziany</TypographyMuted>
       </Card>
     </div>
   );
 }
+
+
