@@ -1,74 +1,190 @@
-'use client'
+'use client';
 
-import Subject from "@/components/grades/subject";
+import type { ReactElement } from 'react';
 
-const gradesData = [
-	{
-		subject: "Matematyka",
-		grades: [
-			{ value: 5, description: "Sprawdzian 1" },
-			{ value: 4, description: "Kartkówka" },
-			{ value: 3, description: "Praca domowa" },
-			{ value: 5, description: "Sprawdzian 2" },
-		],
-	},
-	{
-		subject: "Fizyka",
-		grades: [
-			{ value: 4, description: "Laboratorium" },
-			{ value: 4, description: "Kartkówka" },
-			{ value: 5, description: "Sprawdzian" },
-		],
-	},
-	{
-		subject: "Język polski",
-		grades: [
-			{ value: 3, description: "Wypracowanie" },
-			{ value: 4, description: "Czytanie ze zrozumieniem" },
-			{ value: 4, description: "Kartkówka" },
-			{ value: 5, description: "Prezentacja" },
-			{ value: 5, description: "Sprawdzian" },
-		],
-	},
-	{
-		subject: "Biologia",
-		grades: [
-			{ value: 5, description: "Sprawdzian" },
-			{ value: 4, description: "Projekt" },
-			{ value: 3, description: "Kartkówka" },
-		],
-	},
-	{
-		subject: "Chemia",
-		grades: [
-			{ value: 4, description: "Laboratorium" },
-			{ value: 5, description: "Sprawdzian" },
-		],
-	},
-	{
-		subject: "Historia",
-		grades: [
-			{ value: 5, description: "Prezentacja" },
-			{ value: 4, description: "Kartkówka" },
-			{ value: 3, description: "Wypracowanie" },
-		],
-	},
-	{
-		subject: "Informatyka",
-		grades: [
-			{ value: 5, description: "Projekt" },
-			{ value: 5, description: "Sprawdzian" },
-			{ value: 4, description: "Zadanie domowe" },
-		],
-	},
+import Subject from '@/components/grades/subject';
+
+export type Grade = {
+  value: number;
+  description: string;
+  category:
+    | 'Kartkówka'
+    | 'Sprawdzian'
+    | 'Odpowiedź ustna'
+    | 'Projekt'
+    | 'Laboratorium'
+    | 'Prezentacja'
+    | 'Zadanie domowe'
+    | 'Wypracowanie'
+    | 'Praca domowa';
+};
+
+export type SubjectGrades = {
+  subject: string;
+  grades: Grade[];
+};
+
+export type GradesDataType = SubjectGrades[];
+
+export const gradesData: GradesDataType = [
+  {
+    subject: 'Matematyka',
+    grades: [
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział 1: Równania liniowe — sprawdzian',
+      },
+      {
+        value: 4,
+        category: 'Kartkówka',
+        description: 'Dział 2: Funkcje — kartkówka',
+      },
+      {
+        value: 3,
+        category: 'Zadanie domowe',
+        description: 'Zadanie domowe: Przykłady z procentów',
+      },
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział 3: Całki — sprawdzian',
+      },
+    ],
+  },
+  {
+    subject: 'Fizyka',
+    grades: [
+      {
+        value: 4,
+        category: 'Laboratorium',
+        description: 'Ćwiczenie: Pomiar przyspieszenia — laboratorium',
+      },
+      {
+        value: 4,
+        category: 'Kartkówka',
+        description: 'Dział: Kinematyka — kartkówka',
+      },
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział: Elektromagnetyzm — sprawdzian',
+      },
+    ],
+  },
+  {
+    subject: 'Język polski',
+    grades: [
+      {
+        value: 3,
+        category: 'Odpowiedź ustna',
+        description: 'Dział 3: Romantyzm — odpowiedź ustna',
+      },
+      {
+        value: 4,
+        category: 'Kartkówka',
+        description: 'Analiza tekstu: "Dziady" — kartkówka',
+      },
+      {
+        value: 4,
+        category: 'Kartkówka',
+        description: 'Dział 1: Średniowiecze — kartkówka',
+      },
+      {
+        value: 5,
+        category: 'Prezentacja',
+        description: 'Dział 4: Współczesność — prezentacja',
+      },
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział 3: Romantyzm — sprawdzian',
+      },
+    ],
+  },
+  {
+    subject: 'Biologia',
+    grades: [
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział: Genetyka — sprawdzian',
+      },
+      {
+        value: 4,
+        category: 'Projekt',
+        description: 'Zadanie: Projekt o ekosystemach — projekt',
+      },
+      {
+        value: 3,
+        category: 'Kartkówka',
+        description: 'Dział: Tkanki — kartkówka',
+      },
+    ],
+  },
+  {
+    subject: 'Chemia',
+    grades: [
+      {
+        value: 4,
+        category: 'Laboratorium',
+        description: 'Ćwiczenie: Titracja — laboratorium',
+      },
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział: Chemia organiczna — sprawdzian',
+      },
+    ],
+  },
+  {
+    subject: 'Historia',
+    grades: [
+      {
+        value: 5,
+        category: 'Prezentacja',
+        description: 'Temat: Rewolucja francuska — prezentacja',
+      },
+      {
+        value: 4,
+        category: 'Kartkówka',
+        description: 'Dział: II wojna światowa — kartkówka',
+      },
+      {
+        value: 3,
+        category: 'Wypracowanie',
+        description: 'Wypracowanie: Skutki rewolucji przemysłowej',
+      },
+    ],
+  },
+  {
+    subject: 'Informatyka',
+    grades: [
+      {
+        value: 5,
+        category: 'Projekt',
+        description: 'Projekt: Aplikacja webowa — projekt',
+      },
+      {
+        value: 5,
+        category: 'Sprawdzian',
+        description: 'Dział: Algorytmy — sprawdzian',
+      },
+      {
+        value: 4,
+        category: 'Zadanie domowe',
+        description: 'Zadanie domowe: Zadanie z programowania — zadanie domowe',
+      },
+    ],
+  },
 ];
 
-export default function Home() {
-	return (
-		<div className='m-4 '>
-			{gradesData.map((item, idx) => (
-        <Subject item={item} idx={idx} key={idx}/>
-			))}
-		</div>
-	);
+export default function Home(): ReactElement {
+  return (
+    <div className="m-4">
+      {gradesData.map((item, idx) => (
+        <Subject item={item} idx={idx} key={idx} />
+      ))}
+    </div>
+  );
 }
