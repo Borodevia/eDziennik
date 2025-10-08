@@ -1,16 +1,10 @@
 import { Card } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   TypographyH3,
   TypographyMedium,
   TypographyMuted,
 } from '@/components/ui/typography';
-import {
-  formatTime,
-  getEarliestTime,
-  getLatestTime,
-  parseTime,
-  type Lesson,
-} from '@/lib/timetable-utils';
 
 const data = {
   timetable: [
@@ -32,16 +26,16 @@ const data = {
     },
     {
       lessonNumber: 3,
-      startTime: '9:45',
-      endTime: '10:30',
+      startTime: '9:40',
+      endTime: '10:25',
       roomNumber: '8',
       teacher: 'P. Wiśniewski',
       subject: 'Fizyka',
     },
     {
       lessonNumber: 4,
-      startTime: '10:40',
-      endTime: '11:25',
+      startTime: '10:30',
+      endTime: '11:15',
       roomNumber: '22',
       teacher: 'K. Dąbrowska',
       subject: 'Historia',
@@ -62,55 +56,144 @@ const data = {
       teacher: 'E. Zielińska',
       subject: 'Język angielski',
     },
+    {
+      lessonNumber: 7,
+      startTime: '13:20',
+      endTime: '14:15',
+      roomNumber: '18',
+      teacher: 'E. Zielińska',
+      subject: 'Język angielski',
+    },
+    {
+      lessonNumber: 8,
+      startTime: '14:20',
+      endTime: '15:05',
+      roomNumber: '18',
+      teacher: 'E. Zielińska',
+      subject: 'Język angielski',
+    },
+    {
+      lessonNumber: 9,
+      startTime: '15:10',
+      endTime: '15:55',
+      roomNumber: '18',
+      teacher: 'E. Zielińska',
+      subject: 'Język angielski',
+    },
+    {
+      lessonNumber: 10,
+      startTime: '16:00',
+      endTime: '16:45',
+      roomNumber: '18',
+      teacher: 'E. Zielińska',
+      subject: 'Język angielski',
+    },
   ],
 };
 
-export default function Home() {
-  // Test the time utilities
-  const lessons = data.timetable as Lesson[];
-  const earliest = getEarliestTime(lessons);
-  const latest = getLatestTime(lessons);
+const timeToMinutes = function (time: string): number {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
+};
 
-  console.log('Earliest time:', earliest, 'minutes =', formatTime(earliest));
-  console.log('Latest time:', latest, 'minutes =', formatTime(latest));
-  console.log("parseTime('8:00'):", parseTime('8:00'));
-  console.log("parseTime('13:15'):", parseTime('13:15'));
+const generateTimetable = function (lessons: typeof data.timetable) {
+  if (!lessons || lessons.length == 0) return { hours: [], lessons: [] };
+
+  const startMinutes = Math.min(
+    ...lessons.map((lesson) => timeToMinutes(lesson.startTime))
+  );
+  const endMinutes = Math.max(
+    ...lessons.map((lesson) => timeToMinutes(lesson.endTime))
+  );
+
+  const startHour = Math.floor(startMinutes / 60);
+  const endHour = Math.ceil(endMinutes / 60);
+
+  const pixelsPerMinute = 2; // Adjust this value to control spacing
+
+  const hours = [];
+  for (let hour = startHour; hour <= endHour; hour++) {
+    const hourMinutes = hour * 60;
+    const topOffset = (hourMinutes - startMinutes) * pixelsPerMinute;
+    hours.push({
+      time: `${hour.toString().padStart(2, '0')}:00`,
+      topOffset,
+    });
+  }
+
+  const lessonsWithPositions = lessons.map((lesson) => {
+    const lessonStartMinutes = timeToMinutes(lesson.startTime);
+    const lessonEndMinutes = timeToMinutes(lesson.endTime);
+
+    const topOffset = (lessonStartMinutes - startMinutes) * pixelsPerMinute;
+    const height = (lessonEndMinutes - lessonStartMinutes) * pixelsPerMinute;
+
+    return {
+      ...lesson,
+      topOffset,
+      height,
+    };
+  });
+
+  const totalHeight = (endMinutes - startMinutes) * pixelsPerMinute;
+
+  return { hours, lessons: lessonsWithPositions, totalHeight };
+};
+
+export default function Home() {
+  const { hours, lessons, totalHeight } = generateTimetable(data.timetable);
 
   return (
-    <div className="grid grid-cols-2 grid-rows-2 h-full p-4 gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] grid-rows-2 h-[calc(100vh-4rem)] max-h-[calc(100vh-4rem)] p-4 gap-4 overflow-hidden">
       <Card className="p-6">
         <TypographyH3 className="mb-4">Oceny</TypographyH3>
         <TypographyMuted>Twoje najnowsze oceny</TypographyMuted>
       </Card>
-      <Card className="row-span-2 p-6 flex flex-col">
+      <Card className="row-span-2 p-6 flex flex-col min-h-0 pr-6">
         <TypographyH3 className="mb-4">Plan Lekcji</TypographyH3>
-        <div className="flex flex-row overflow-y-auto max-h-[60vh]">
-          <div className="w-[40px]">
-            <TypographyMuted className="h-[80px]">8.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">9.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">10.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">11.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">12.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">13.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">14.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">15.00</TypographyMuted>
-            <TypographyMuted className="h-[80px]">16.00</TypographyMuted>
-          </div>
-          <div className="flex flex-col">
-            {data.timetable.map((lesson) => (
-              <div className="flex flex-row p-2" key={lesson.lessonNumber}>
-                <div className="text-sm">
-                  <TypographyMedium>{lesson.subject}</TypographyMedium>
-                  <TypographyMuted>
-                    {lesson.startTime} - {lesson.endTime} • Sala{' '}
-                    {lesson.roomNumber}
-                  </TypographyMuted>
-                  <TypographyMuted>{lesson.teacher} </TypographyMuted>
+        <ScrollArea className="flex-1 overflow-auto min-h-0 pr-6">
+          <div className="flex flex-row h-full">
+            <div
+              className="w-[60px] relative"
+              style={{ height: `${totalHeight}px` }}
+            >
+              {hours.map((hour) => (
+                <div
+                  key={hour.time}
+                  className="flex items-start absolute before:content-[''] before:absolute before:left-0 before:right-0 before:top-0 before:h-px before:w-[60px] before:bg-accent"
+                  style={{ top: `${hour.topOffset}px` }}
+                >
+                  <TypographyMuted>{hour.time}</TypographyMuted>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div
+              className="relative ml-4"
+              style={{ height: `${totalHeight}px` }}
+            >
+              <div className="w-[300px]" aria-hidden />
+              {lessons.map((lesson) => (
+                <Card
+                  className="absolute flex flex-row p-2 w-[300px]"
+                  key={lesson.lessonNumber}
+                  style={{
+                    top: `${lesson.topOffset}px`,
+                    height: `${lesson.height}px`,
+                  }}
+                >
+                  <div className="text-sm">
+                    <TypographyMedium>{lesson.subject}</TypographyMedium>
+                    <TypographyMuted>
+                      {lesson.startTime} - {lesson.endTime} • Sala{' '}
+                      {lesson.roomNumber}
+                    </TypographyMuted>
+                    <TypographyMuted>{lesson.teacher} </TypographyMuted>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollArea>
       </Card>
       <Card className="p-6">
         <TypographyH3 className="mb-4">Sprawdziany</TypographyH3>
