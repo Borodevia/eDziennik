@@ -16,268 +16,236 @@ const data = {
   timetable: {
     monday: [
       {
-        lessonNumber: 1,
-        startTime: '8:00',
-        endTime: '8:45',
+        startTime: 28800,
+        endTime: 31500,
         roomNumber: '12',
         teacher: 'A. Kowalski',
         subject: 'Matematyka',
       },
       {
-        lessonNumber: 2,
-        startTime: '8:50',
-        endTime: '9:35',
+        startTime: 31800, // 8:50 in seconds
+        endTime: 34500, // 9:35 in seconds
         roomNumber: '15',
         teacher: 'M. Nowak',
         subject: 'Język polski',
       },
       {
-        lessonNumber: 3,
-        startTime: '9:40',
-        endTime: '10:25',
         roomNumber: '8',
         teacher: 'P. Wiśniewski',
         subject: 'Fizyka',
+        startTime: 34800,
+        endTime: 37500,
       },
       {
-        lessonNumber: 4,
-        startTime: '10:30',
-        endTime: '11:15',
         roomNumber: '22',
         teacher: 'K. Dąbrowska',
         subject: 'Historia',
+        startTime: 37800,
+        endTime: 40500,
       },
       {
-        lessonNumber: 5,
-        startTime: '11:35',
-        endTime: '12:20',
         roomNumber: '5',
         teacher: 'J. Lewandowski',
         subject: 'Chemia',
+        startTime: 41700,
+        endTime: 44400,
       },
       {
-        lessonNumber: 6,
-        startTime: '12:30',
-        endTime: '13:15',
         roomNumber: '18',
         teacher: 'P. Kowalczyk',
         subject: 'Geografia',
+        startTime: 45000,
+        endTime: 47700,
       },
       {
-        lessonNumber: 7,
-        startTime: '13:20',
-        endTime: '14:15',
         roomNumber: '18',
         teacher: 'A. Wójcik',
         subject: 'Informatyka',
+        startTime: 48000,
+        endTime: 51300,
       },
       {
-        lessonNumber: 8,
-        startTime: '14:20',
-        endTime: '15:05',
         roomNumber: '18',
         teacher: 'M. Grabowski',
         subject: 'Muzyka',
+        startTime: 51600,
+        endTime: 54300,
       },
       {
-        lessonNumber: 9,
-        startTime: '15:10',
-        endTime: '15:55',
         roomNumber: '18',
         teacher: 'S. Majewska',
         subject: 'Biologia',
+        startTime: 54600,
+        endTime: 57300,
       },
       {
-        lessonNumber: 10,
-        startTime: '16:00',
-        endTime: '16:45',
         roomNumber: '18',
         teacher: 'T. Kaczmarek',
         subject: 'Wychowanie fizyczne',
+        startTime: 57600,
+        endTime: 60300,
       },
     ],
     tuesday: [
       {
-        lessonNumber: 1,
-        startTime: '8:00',
-        endTime: '8:45',
         roomNumber: '21',
         teacher: 'E. Kaczmarek',
         subject: 'Język angielski',
+        startTime: 28800,
+        endTime: 31500,
       },
       {
-        lessonNumber: 2,
-        startTime: '8:50',
-        endTime: '9:35',
         roomNumber: '15',
         teacher: 'M. Nowak',
         subject: 'Biologia',
+        startTime: 31800,
+        endTime: 34500,
       },
       {
-        lessonNumber: 3,
-        startTime: '9:40',
-        endTime: '10:25',
         roomNumber: '7',
         teacher: 'P. Zieliński',
         subject: 'Wiedza o społeczeństwie',
+        startTime: 34800,
+        endTime: 37500,
       },
       {
-        lessonNumber: 4,
-        startTime: '10:30',
-        endTime: '11:15',
         roomNumber: '12',
         teacher: 'A. Kowalski',
         subject: 'Matematyka',
+        startTime: 37800,
+        endTime: 40500,
       },
       {
-        lessonNumber: 5,
-        startTime: '11:35',
-        endTime: '12:20',
         roomNumber: '3',
         teacher: 'B. Szymańska',
         subject: 'Plastyka',
+        startTime: 41700,
+        endTime: 44400,
       },
       {
-        lessonNumber: 6,
-        startTime: '12:30',
-        endTime: '13:15',
         roomNumber: '18',
         teacher: 'P. Kowalczyk',
         subject: 'Geografia',
+        startTime: 45000,
+        endTime: 47700,
       },
     ],
     wednesday: [
       {
-        lessonNumber: 1,
-        startTime: '8:00',
-        endTime: '8:45',
         roomNumber: '10',
         teacher: 'K. Dąbrowska',
         subject: 'Historia',
+        startTime: 28800,
+        endTime: 31500,
       },
       {
-        lessonNumber: 2,
-        startTime: '8:50',
-        endTime: '9:35',
         roomNumber: '15',
         teacher: 'M. Nowak',
         subject: 'Język polski',
+        startTime: 31800,
+        endTime: 34500,
       },
       {
-        lessonNumber: 3,
-        startTime: '9:40',
-        endTime: '10:25',
         roomNumber: '8',
         teacher: 'P. Wiśniewski',
         subject: 'Fizyka',
+        startTime: 34800,
+        endTime: 37500,
       },
       {
-        lessonNumber: 4,
-        startTime: '10:30',
-        endTime: '11:15',
         roomNumber: '14',
         teacher: 'A. Wójcik',
         subject: 'Informatyka',
+        startTime: 37800,
+        endTime: 40500,
       },
       {
-        lessonNumber: 5,
-        startTime: '11:35',
-        endTime: '12:20',
         roomNumber: '5',
         teacher: 'J. Lewandowski',
         subject: 'Chemia',
+        startTime: 41700,
+        endTime: 44400,
       },
     ],
     thursday: [
       {
-        lessonNumber: 1,
-        startTime: '8:00',
-        endTime: '8:45',
         roomNumber: '12',
         teacher: 'A. Kowalski',
         subject: 'Matematyka',
+        startTime: 28800,
+        endTime: 31500,
       },
       {
-        lessonNumber: 2,
-        startTime: '8:50',
-        endTime: '9:35',
         roomNumber: '22',
         teacher: 'K. Dąbrowska',
         subject: 'Historia',
+        startTime: 31800,
+        endTime: 34500,
       },
       {
-        lessonNumber: 3,
-        startTime: '9:40',
-        endTime: '10:25',
         roomNumber: '18',
         teacher: 'P. Kowalczyk',
         subject: 'Geografia',
+        startTime: 34800,
+        endTime: 37500,
       },
       {
-        lessonNumber: 4,
-        startTime: '10:30',
-        endTime: '11:15',
         roomNumber: '9',
         teacher: 'M. Grabowski',
         subject: 'Muzyka',
+        startTime: 37800,
+        endTime: 40500,
       },
       {
-        lessonNumber: 5,
-        startTime: '11:35',
-        endTime: '12:20',
         roomNumber: '4',
         teacher: 'S. Majewska',
         subject: 'Biologia',
+        startTime: 41700,
+        endTime: 44400,
       },
       {
-        lessonNumber: 6,
-        startTime: '12:30',
-        endTime: '13:15',
         roomNumber: '18',
         teacher: 'T. Kaczmarek',
         subject: 'Wychowanie fizyczne',
+        startTime: 45000,
+        endTime: 47700,
       },
     ],
     friday: [
       {
-        lessonNumber: 1,
-        startTime: '8:00',
-        endTime: '8:45',
         roomNumber: '11',
         teacher: 'B. Szymańska',
         subject: 'Plastyka',
+        startTime: 28800,
+        endTime: 31500,
       },
       {
-        lessonNumber: 2,
-        startTime: '8:50',
-        endTime: '9:35',
         roomNumber: '15',
         teacher: 'M. Nowak',
         subject: 'Język polski',
+        startTime: 31800,
+        endTime: 34500,
       },
       {
-        lessonNumber: 3,
-        startTime: '9:40',
-        endTime: '10:25',
         roomNumber: '8',
         teacher: 'P. Wiśniewski',
         subject: 'Fizyka',
+        startTime: 34800,
+        endTime: 37500,
       },
       {
-        lessonNumber: 4,
-        startTime: '10:30',
-        endTime: '11:15',
         roomNumber: '12',
         teacher: 'A. Kowalski',
         subject: 'Matematyka',
+        startTime: 37800,
+        endTime: 40500,
       },
       {
-        lessonNumber: 5,
-        startTime: '11:35',
-        endTime: '12:20',
         roomNumber: '3',
         teacher: 'E. Kaczmarek',
         subject: 'Język angielski',
+        startTime: 41700,
+        endTime: 44400,
       },
     ],
     saturday: [],
@@ -285,10 +253,9 @@ const data = {
   },
 };
 
-const timeToMinutes = function (time: string): number {
-  const [hours, minutes] = time.split(':').map(Number);
-  const out = hours * 60 + minutes;
-  console.log(out)
+const timeToMinutes = (time: number): number => {
+  const out = time / 60;
+  console.log(out);
   return out;
 };
 
@@ -425,7 +392,7 @@ export default function Home() {
               {lessons.map((lesson) => (
                 <Card
                   className="absolute flex flex-row p-2 w-[300px]"
-                  key={lesson.lessonNumber}
+                  key={lesson.subject + lesson.startTime}
                   style={{
                     top: `${lesson.topOffset}px`,
                     height: `${lesson.height}px`,
@@ -434,7 +401,7 @@ export default function Home() {
                   <div className="text-sm">
                     <TypographyMedium>{lesson.subject}</TypographyMedium>
                     <TypographyMuted>
-                      {lesson.startTime} - {lesson.endTime} • Sala{' '}
+                      {f(lesson.startTime)} - {f(lesson.endTime)} • Sala{' '}
                       {lesson.roomNumber}
                     </TypographyMuted>
                     <TypographyMuted>{lesson.teacher} </TypographyMuted>
@@ -452,3 +419,6 @@ export default function Home() {
     </div>
   );
 }
+
+const f = (ts: number): string =>
+  `${Math.floor(ts / 3600)}:${(ts / 60 - Math.floor(ts / 3600) * 60).toString().padStart(2, '0')}`;
