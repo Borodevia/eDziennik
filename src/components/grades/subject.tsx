@@ -25,6 +25,9 @@ type SubjectProps = {
 function Subject({ item, idx }: SubjectProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // Dodajemy animowany wariant TableRow
+  const MotionTableRow = motion(TableRow);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -40,7 +43,6 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
           <Card className="mb-4 p-4 w-full">
             <div className="font-semibold mb-2">{item.subject}</div>
 
-
             {isOpen ?
               <motion.div
                 key="table"
@@ -50,7 +52,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
                 className="overflow-hidden"
               >
-                <Table className='overflow-hidden'>
+                <Table className="overflow-hidden">
                   <TableHeader>
                     <TableRow>
                       <TableHead>Ocena</TableHead>
@@ -60,11 +62,17 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                   </TableHeader>
                   <TableBody>
                     {item.grades.map((grade, gidx) => (
-                      <TableRow key={gidx}>
+                      <MotionTableRow
+                        key={gidx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: gidx * 0.07 }}
+                        className={`duration-${gidx}`}
+                      >
                         <TableCell>{grade.value}</TableCell>
                         <TableCell>{grade.category}</TableCell>
                         <TableCell>{grade.description}</TableCell>
-                      </TableRow>
+                      </MotionTableRow>
                     ))}
                   </TableBody>
                   <TableFooter></TableFooter>
@@ -85,7 +93,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                     >
                       <Badge
                         variant="outline"
-                        className="font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50"
+                        className="font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
                       >
                         {grade.value}
                       </Badge>
