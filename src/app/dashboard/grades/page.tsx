@@ -3,6 +3,7 @@
 import type { ReactElement } from 'react';
 
 import Subject from '@/components/grades/subject';
+import { LayoutGroup, motion } from 'motion/react';
 
 export type Grade = {
   value: number;
@@ -26,7 +27,7 @@ export type SubjectGrades = {
 
 export type GradesDataType = SubjectGrades[];
 
-export const gradesData: GradesDataType = [
+const gradesData: GradesDataType = [
   {
     subject: 'Matematyka',
     grades: [
@@ -181,10 +182,12 @@ export const gradesData: GradesDataType = [
 
 export default function Home(): ReactElement {
   return (
-    <div className="m-4">
-      {gradesData.map((item, idx) => (
-        <Subject item={item} idx={idx} key={idx} />
-      ))}
-    </div>
+    <LayoutGroup>
+      <motion.div layout className="m-4">
+        {gradesData.map((item, idx) => (
+          <Subject item={item} idx={idx} key={idx} />
+        ))}
+      </motion.div>
+    </LayoutGroup>
   );
 }

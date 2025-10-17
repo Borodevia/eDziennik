@@ -25,14 +25,18 @@ type SubjectProps = {
 function Subject({ item, idx }: SubjectProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  // Dodajemy animowany wariant TableRow
   const MotionTableRow = motion(TableRow);
 
   return (
     <motion.div
+      layout
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.28, ease: 'easeOut' }}
+      transition={{
+        duration: 0.28,
+        ease: 'easeOut',
+        layout: { duration: 0.28, ease: 'easeOut' },
+      }}
     >
       <Collapsible
         open={isOpen}
@@ -41,15 +45,22 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
       >
         <CollapsibleTrigger asChild>
           <Card className="mb-4 p-4 w-full">
-            <div className="font-semibold mb-2">{item.subject}</div>
+            <motion.div layout="position" className="font-semibold mb-2">
+              {item.subject}
+            </motion.div>
 
             {isOpen ?
               <motion.div
                 key="table"
+                layout
                 initial={{ opacity: 0, y: 8, scale: 1 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
+                transition={{
+                  duration: 0.22,
+                  ease: 'easeOut',
+                  layout: { duration: 0.28, ease: 'easeOut' },
+                }}
                 className="overflow-hidden"
               >
                 <Table className="overflow-hidden">
@@ -78,7 +89,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                   <TableFooter></TableFooter>
                 </Table>
               </motion.div>
-            : <ul className="list-none flex gap-2.5">
+            : <motion.ul layout className="list-none flex gap-2.5">
                 {item.grades.map((grade, gidx) => (
                   <li key={gidx} className="">
                     <motion.span
@@ -100,7 +111,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                     </motion.span>
                   </li>
                 ))}
-              </ul>
+              </motion.ul>
             }
           </Card>
         </CollapsibleTrigger>
