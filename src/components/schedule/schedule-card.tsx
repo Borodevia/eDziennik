@@ -13,7 +13,7 @@ export const ScheduleCard = ({ lessons }: ScheduleCardProps) => {
   return (
     <Card className="row-span-2 p-6 flex flex-col min-h-0 pr-6">
       <TypographyH2 className="mb-4">Plan Lekcji</TypographyH2>
-      <div className="overflow-y-auto">
+      <div className="flex flex-col overflow-y-auto gap-2">
         {lessons.length > 0 ?
           lessons.map((lesson) => (
             <LessonItem key={lesson.id} lesson={lesson} />

@@ -31,6 +31,15 @@ export const mockScheduleData: ScheduleData = {
       teacher: 'C. Wiśniewska',
       subject: 'Historia',
     },
+    {
+      id: 4,
+      day: 1,
+      start: 37800,
+      end: 40500,
+      room: '7',
+      teacher: 'P. Kowalczyk',
+      subject: 'Angielski',
+    },
     // Wtorek
     {
       id: 4,
@@ -191,6 +200,8 @@ export const mockScheduleData: ScheduleData = {
         subject: 'Historia',
         teacher: 'K. Wiśniewski',
         room: '105',
+        start: 35400,
+        end: 38100,
       },
     },
     {
