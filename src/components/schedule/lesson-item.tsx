@@ -23,23 +23,12 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
   const isCanceled = lesson.exception?.type === 'canceled';
   const isSubstitution = lesson.exception?.type === 'substitution';
 
-  const baseStart = lesson.start;
-  const baseEnd = lesson.end;
-  const overrideStart = lesson.exception?.newData?.start ?? baseStart;
-  const overrideEnd = lesson.exception?.newData?.end ?? baseEnd;
-  const hasTimeOverride =
-    lesson.exception?.newData?.start !== undefined ||
-    lesson.exception?.newData?.end !== undefined;
-
-  const subjectOverride = lesson.exception?.newData?.subject;
-  const teacherOverride = lesson.exception?.newData?.teacher;
-  const roomOverride = lesson.exception?.newData?.room;
-
-  // When substitution happens, strike only the fields that got overridden
-  const strikeSubject = isCanceled || (isSubstitution && !!subjectOverride);
-  const strikeTime = isCanceled || (isSubstitution && hasTimeOverride);
-  const strikeTeacher = isCanceled || (isSubstitution && !!teacherOverride);
-  const strikeRoom = isCanceled || (isSubstitution && !!roomOverride);
+  // Użyj danych z zastępstwa jeśli istnieją, w przeciwnym razie użyj oryginalnych
+  const displaySubject = lesson.exception?.newData?.subject ?? lesson.subject;
+  const displayStart = lesson.exception?.newData?.start ?? lesson.start;
+  const displayEnd = lesson.exception?.newData?.end ?? lesson.end;
+  const displayTeacher = lesson.exception?.newData?.teacher ?? lesson.teacher;
+  const displayRoom = lesson.exception?.newData?.room ?? lesson.room;
 
   return (
     <Card className="relative w-[320px] p-3 transition-colors hover:shadow-sm">
@@ -51,18 +40,11 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
       <div className="flex h-full flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <div className="flex min-w-0 items-center gap-1">
-              <TypographyMedium
-                className={`truncate font-medium ${strikeSubject ? 'line-through opacity-50' : ''}`}
-              >
-                {lesson.subject}
-              </TypographyMedium>
-              {subjectOverride && (
-                <TypographyMedium className="flex items-center text-emerald-600 whitespace-nowrap">
-                  <span className="truncate">{subjectOverride}</span>
-                </TypographyMedium>
-              )}
-            </div>
+            <TypographyMedium
+              className={`truncate font-medium ${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
+            >
+              {displaySubject}
+            </TypographyMedium>
           </div>
 
           {isCanceled ?
@@ -81,44 +63,19 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
 
         <div className="mt-1 flex items-center gap-2 text-sm">
           <TypographySmall
-            className={`${strikeTime ? 'line-through opacity-50' : ''} whitespace-nowrap`}
+            className={`whitespace-nowrap ${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
           >
-            {formatSecondsToTime(baseStart)} - {formatSecondsToTime(baseEnd)}
+            {formatSecondsToTime(displayStart)} -{' '}
+            {formatSecondsToTime(displayEnd)}
           </TypographySmall>
-          {hasTimeOverride && (
-            <TypographySmall className="flex items-center text-emerald-600 whitespace-nowrap">
-              {formatSecondsToTime(overrideStart)} -{' '}
-              {formatSecondsToTime(overrideEnd)}
-            </TypographySmall>
-          )}
         </div>
 
-        <div className="mt-1 grid grid-cols-[auto_1fr] items-center gap-x-2 gap-y-1 text-sm">
-          <div className="min-w-0 flex items-center gap-1">
-            <TypographySmall
-              className={`truncate ${strikeTeacher ? 'line-through opacity-50' : ''}`}
-            >
-              {lesson.teacher},
-            </TypographySmall>
-            {teacherOverride && (
-              <TypographySmall className="flex items-center text-emerald-600 whitespace-nowrap">
-                <span className="truncate">{teacherOverride},</span>
-              </TypographySmall>
-            )}
-          </div>
-
-          <div className="min-w-0 flex items-center gap-1">
-            <TypographySmall
-              className={`truncate ${strikeRoom ? 'line-through opacity-50' : ''}`}
-            >
-              sala {lesson.room}
-            </TypographySmall>
-            {roomOverride && (
-              <TypographySmall className="flex items-center text-emerald-600 whitespace-nowrap">
-                <span className="truncate">sala {roomOverride}</span>
-              </TypographySmall>
-            )}
-          </div>
+        <div className="mt-1 flex items-center gap-2 text-sm">
+          <TypographySmall
+            className={`${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
+          >
+            {displayTeacher}, sala {displayRoom}
+          </TypographySmall>
         </div>
       </div>
     </Card>
