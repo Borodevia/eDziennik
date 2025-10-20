@@ -20,12 +20,29 @@ import { Card } from '../ui/card';
 type SubjectProps = {
   item: SubjectGrades;
   idx: number;
+  scrollToMe?: () => void;
+  subjectRef?: React.RefObject<HTMLDivElement>;
 };
 
-function Subject({ item, idx }: SubjectProps): ReactElement {
+function Subject({
+  item,
+  idx,
+  scrollToMe,
+  subjectRef,
+}: SubjectProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const MotionTableRow = motion(TableRow);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open && scrollToMe && subjectRef?.current) {
+      const top =
+        subjectRef.current.getBoundingClientRect().top + window.scrollY - 60;
+      setTimeout(() => {
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 100);
+    }
+  };
 
   return (
     <motion.div
@@ -37,10 +54,11 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
         ease: 'easeOut',
         layout: { duration: 0.28, ease: 'easeOut' },
       }}
+      ref={subjectRef}
     >
       <Collapsible
         open={isOpen}
-        onOpenChange={setIsOpen}
+        onOpenChange={handleOpenChange}
         className="w-full transition-all duration-200"
       >
         <CollapsibleTrigger asChild>
@@ -48,7 +66,6 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
             <motion.div layout="position" className="font-semibold mb-2">
               {item.subject}
             </motion.div>
-
             {isOpen ?
               <motion.div
                 key="table"
@@ -77,7 +94,9 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                         key={gidx}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: gidx * 0.07 }}
+                        transition={{
+                          delay: 0.1 * gidx * Math.max(0.3, 1 - gidx * 0.1),
+                        }}
                         className={`duration-${gidx}`}
                       >
                         <TableCell>{grade.value}</TableCell>
@@ -89,7 +108,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                   <TableFooter></TableFooter>
                 </Table>
               </motion.div>
-            : <motion.ul layout className="list-none flex gap-2.5">
+            : <motion.ul layout className="list-none flex gap-2.5 flex-wrap">
                 {item.grades.map((grade, gidx) => (
                   <li key={gidx} className="">
                     <motion.span
@@ -98,7 +117,7 @@ function Subject({ item, idx }: SubjectProps): ReactElement {
                       transition={{
                         duration: 0.18,
                         ease: 'easeOut',
-                        delay: 0.1 * gidx,
+                        delay: 0.1 * gidx * Math.max(0.3, 1 - gidx * 0.1),
                       }}
                       className="inline-block"
                     >

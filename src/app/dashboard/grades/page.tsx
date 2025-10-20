@@ -4,6 +4,7 @@ import type { ReactElement } from 'react';
 
 import Subject from '@/components/grades/subject';
 import { LayoutGroup, motion } from 'motion/react';
+import { useRef } from 'react';
 
 export type Grade = {
   value: number;
@@ -96,11 +97,6 @@ const gradesData: GradesDataType = [
         category: 'Prezentacja',
         description: 'Dział 4: Współczesność — prezentacja',
       },
-      {
-        value: 5,
-        category: 'Sprawdzian',
-        description: 'Dział 3: Romantyzm — sprawdzian',
-      },
     ],
   },
   {
@@ -176,17 +172,38 @@ const gradesData: GradesDataType = [
         category: 'Zadanie domowe',
         description: 'Zadanie domowe: Zadanie z programowania — zadanie domowe',
       },
+      {
+        value: 5,
+        category: 'Projekt',
+        description: 'Projekt: Aplikacja webowa — projekt',
+      },
     ],
   },
 ];
 
 export default function Home(): ReactElement {
+  const subjectRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const getScrollToFn = (idx: number) => () => {};
+
   return (
     <LayoutGroup>
       <motion.div layout className="m-4">
-        {gradesData.map((item, idx) => (
-          <Subject item={item} idx={idx} key={idx} />
-        ))}
+        {gradesData.map((item, idx) => {
+          if (!subjectRefs.current[idx]) subjectRefs.current[idx] = null;
+          const refObj = {
+            current: subjectRefs.current[idx],
+          } as React.RefObject<HTMLDivElement>;
+          return (
+            <Subject
+              item={item}
+              idx={idx}
+              key={idx}
+              scrollToMe={getScrollToFn(idx)}
+              subjectRef={refObj}
+            />
+          );
+        })}
       </motion.div>
     </LayoutGroup>
   );
