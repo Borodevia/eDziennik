@@ -37,11 +37,15 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
     isCanceled ? 'bg-rose-500/90'
     : isSubstitution ? 'bg-amber-500/90'
     : 'bg-zinc-300 dark:bg-zinc-600/90';
+  const bgColorClass =
+    isCanceled ? 'bg-rose-500/15'
+    : isSubstitution ? 'bg-amber-500/15'
+    : 'bg-zinc-300 dark:bg-zinc-600/5';
   const strikeClass = isCanceled ? 'line-through opacity-50' : '';
 
   return (
     <Card
-      className={`relative w-[300px] p-3 transition-colors hover:shadow-sm rounded-sm h-20`}
+      className={`relative w-[300px] p-3 transition-colors hover:shadow-sm rounded-sm h-20 ${bgColorClass}`}
     >
       <span
         aria-hidden
