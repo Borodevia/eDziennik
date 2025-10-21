@@ -2,7 +2,11 @@ import { Badge } from '@/components/ui/badge';
 import { LessonWithException } from '@/types/schedule';
 import { AlertTriangle, XCircle } from 'lucide-react';
 import { Card } from '../ui/card';
-import { TypographyMedium, TypographySmall } from '../ui/typography';
+import {
+  TypographyExtraSmall,
+  TypographyMedium,
+  TypographySmall,
+} from '../ui/typography';
 
 interface LessonItemProps {
   lesson: LessonWithException;
@@ -37,7 +41,7 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
 
   return (
     <Card
-      className={`relative w-[300px] p-3 transition-colors hover:shadow-sm rounded-l-sm h-20`}
+      className={`relative w-[300px] p-3 transition-colors hover:shadow-sm rounded-sm h-20`}
     >
       <span
         aria-hidden
@@ -47,7 +51,9 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
       <div className="flex h-full flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <TypographyMedium className={`truncate font-medium ${strikeClass}`}>
+            <TypographyMedium
+              className={`truncate font-semibold  ${strikeClass}`}
+            >
               {displaySubject}
             </TypographyMedium>
           </div>
@@ -60,18 +66,19 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
         </div>
 
         <div
-          className={`mt-1 flex items-center justify-between gap-2 text-sm `}
+          className={`mt-1 flex items-center justify-between font-light gap-2 text-sm `}
         >
-          <TypographySmall className={strikeClass}>
+          <TypographyExtraSmall className={strikeClass}>
             {displayTeacher}, sala {displayRoom}
-          </TypographySmall>
+          </TypographyExtraSmall>
 
           {isCanceled ?
             <Badge
               variant="outline"
               className={`gap-1 select-none ${accentColorClass} absolute right-2`}
             >
-              <XCircle className="h-3 w-3" /> Odwołane
+              <XCircle className="h-3 w-3" />
+              Odwołane
             </Badge>
           : isSubstitution ?
             <Badge
