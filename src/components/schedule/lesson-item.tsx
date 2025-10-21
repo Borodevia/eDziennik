@@ -37,7 +37,7 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
 
   return (
     <Card
-      className={`relative w-[320px] p-3 transition-colors hover:shadow-sm rounded-l-sm`}
+      className={`relative w-[300px] p-3 transition-colors hover:shadow-sm rounded-l-sm h-20`}
     >
       <span
         aria-hidden
@@ -69,14 +69,14 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
           {isCanceled ?
             <Badge
               variant="outline"
-              className={`gap-1 select-none ${accentColorClass}`}
+              className={`gap-1 select-none ${accentColorClass} absolute right-2`}
             >
               <XCircle className="h-3 w-3" /> Odwołane
             </Badge>
           : isSubstitution ?
             <Badge
               variant="outline"
-              className={`gap-1 select-none ${accentColorClass}`}
+              className={`gap-1 select-none ${accentColorClass} absolute right-2`}
             >
               <AlertTriangle className="h-3 w-3" /> Zastępstwo
             </Badge>

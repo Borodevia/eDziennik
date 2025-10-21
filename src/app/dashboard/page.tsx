@@ -1,5 +1,3 @@
-'use client';
-
 import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { ExamsCard } from '@/components/exams/exams-card';
 import { GradesCard } from '@/components/grades/grades-card';
