@@ -39,12 +39,34 @@ function Subject({
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
-    if (open && scrollToMe && subjectRef?.current) {
+    if (
+      open &&
+      scrollToMe &&
+      subjectRef?.current &&
+      typeof window !== 'undefined'
+    ) {
       const top =
         subjectRef.current.getBoundingClientRect().top + window.scrollY - 60;
-      setTimeout(() => {
-        window.scrollTo({ top, behavior: 'smooth' });
-      }, 100);
+
+      const threshold = 1;
+      const docHeight =
+        document.documentElement?.scrollHeight ?? document.body.scrollHeight;
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= docHeight - threshold;
+
+      if (isAtBottom) {
+        const nudge = 16;
+        const newTop = Math.max(0, window.scrollY - nudge);
+        window.scrollTo({ top: newTop, behavior: 'auto' });
+
+        setTimeout(() => {
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 120);
+      } else {
+        setTimeout(() => {
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 100);
+      }
     }
   };
 
