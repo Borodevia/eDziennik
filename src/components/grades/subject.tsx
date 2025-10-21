@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/table';
 import { useState, type ReactElement } from 'react';
 import { Card } from '../ui/card';
+import GradeDialog from './grade-dialog';
 
 type SubjectProps = {
   item: SubjectGrades;
@@ -32,6 +33,9 @@ function Subject({
 }: SubjectProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const MotionTableRow = motion(TableRow);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dialogSelected, setDialogSelected] = useState<number>(0);
+  const [disableRowAnim, setDisableRowAnim] = useState<boolean>(false);
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
@@ -42,6 +46,12 @@ function Subject({
         window.scrollTo({ top, behavior: 'smooth' });
       }, 100);
     }
+  };
+
+  const openDialogFor = (idx: number) => {
+    setDialogSelected(idx);
+    setDisableRowAnim(true);
+    setDialogOpen(true);
   };
 
   return (
@@ -92,16 +102,30 @@ function Subject({
                     {item.grades.map((grade, gidx) => (
                       <MotionTableRow
                         key={gidx}
-                        initial={{ opacity: 0, x: -10 }}
+                        initial={
+                          disableRowAnim ? false : { opacity: 0, x: -10 }
+                        }
                         animate={{ opacity: 1, x: 0 }}
+                        layout={!disableRowAnim}
                         transition={{
                           delay: 0.1 * gidx * Math.max(0.3, 1 - gidx * 0.1),
                         }}
                         className={`duration-${gidx}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          openDialogFor(gidx);
+                        }}
                       >
-                        <TableCell>{grade.value}</TableCell>
-                        <TableCell>{grade.category}</TableCell>
-                        <TableCell>{grade.description}</TableCell>
+                        <TableCell className="cursor-pointer">
+                          {grade.value}
+                        </TableCell>
+                        <TableCell className="cursor-pointer">
+                          {grade.category}
+                        </TableCell>
+                        <TableCell className="cursor-pointer">
+                          {grade.description}
+                        </TableCell>
                       </MotionTableRow>
                     ))}
                   </TableBody>
@@ -122,8 +146,14 @@ function Subject({
                       className="inline-block"
                     >
                       <Badge
+                        asChild={false}
                         variant="outline"
-                        className="font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                        className="font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          openDialogFor(gidx);
+                        }}
                       >
                         {grade.value}
                       </Badge>
@@ -135,6 +165,15 @@ function Subject({
           </Card>
         </CollapsibleTrigger>
       </Collapsible>
+      <GradeDialog
+        open={dialogOpen}
+        onOpenChangeAction={(o) => {
+          setDialogOpen(o);
+        }}
+        subject={item.subject}
+        grades={item.grades}
+        initialIndex={dialogSelected}
+      />
     </motion.div>
   );
 }
