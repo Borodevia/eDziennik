@@ -1,6 +1,6 @@
+import { Badge } from '@/components/ui/badge';
 import { LessonWithException } from '@/types/schedule';
 import { AlertTriangle, XCircle } from 'lucide-react';
-import { Badge } from '../ui/badge';
 import { Card } from '../ui/card';
 import { TypographyMedium, TypographySmall } from '../ui/typography';
 
@@ -23,59 +23,64 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
   const isCanceled = lesson.exception?.type === 'canceled';
   const isSubstitution = lesson.exception?.type === 'substitution';
 
-  // Użyj danych z zastępstwa jeśli istnieją, w przeciwnym razie użyj oryginalnych
   const displaySubject = lesson.exception?.newData?.subject ?? lesson.subject;
   const displayStart = lesson.exception?.newData?.start ?? lesson.start;
   const displayEnd = lesson.exception?.newData?.end ?? lesson.end;
   const displayTeacher = lesson.exception?.newData?.teacher ?? lesson.teacher;
   const displayRoom = lesson.exception?.newData?.room ?? lesson.room;
+  // Kolor paska akcentu po lewej stronie
+  const accentColorClass =
+    isCanceled ? 'bg-rose-500/90'
+    : isSubstitution ? 'bg-amber-500/90'
+    : 'bg-zinc-300 dark:bg-zinc-600/90';
+  const strikeClass = isCanceled ? 'line-through opacity-50' : '';
 
   return (
-    <Card className="relative w-[320px] p-3 transition-colors hover:shadow-sm">
+    <Card
+      className={`relative w-[320px] p-3 transition-colors hover:shadow-sm rounded-l-sm`}
+    >
       <span
         aria-hidden
-        className="absolute left-0 top-0 h-full w-1 rounded-l-md"
+        className={`absolute left-0 top-0 h-full w-1 rounded-l-md ${accentColorClass}`}
       />
 
       <div className="flex h-full flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <TypographyMedium
-              className={`truncate font-medium ${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
-            >
+            <TypographyMedium className={`truncate font-medium ${strikeClass}`}>
               {displaySubject}
             </TypographyMedium>
           </div>
+          <div className="flex items-end gap-2 text-sm">
+            <TypographySmall className={`whitespace-nowrap ${strikeClass}`}>
+              {formatSecondsToTime(displayStart)} -{' '}
+              {formatSecondsToTime(displayEnd)}
+            </TypographySmall>
+          </div>
+        </div>
+
+        <div
+          className={`mt-1 flex items-center justify-between gap-2 text-sm `}
+        >
+          <TypographySmall className={strikeClass}>
+            {displayTeacher}, sala {displayRoom}
+          </TypographySmall>
 
           {isCanceled ?
-            <Badge variant="destructive" className="gap-1">
+            <Badge
+              variant="outline"
+              className={`gap-1 select-none ${accentColorClass}`}
+            >
               <XCircle className="h-3 w-3" /> Odwołane
             </Badge>
           : isSubstitution ?
             <Badge
               variant="outline"
-              className="gap-1 border-amber-300 bg-amber-50 text-amber-700"
+              className={`gap-1 select-none ${accentColorClass}`}
             >
               <AlertTriangle className="h-3 w-3" /> Zastępstwo
             </Badge>
           : null}
-        </div>
-
-        <div className="mt-1 flex items-center gap-2 text-sm">
-          <TypographySmall
-            className={`whitespace-nowrap ${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
-          >
-            {formatSecondsToTime(displayStart)} -{' '}
-            {formatSecondsToTime(displayEnd)}
-          </TypographySmall>
-        </div>
-
-        <div className="mt-1 flex items-center gap-2 text-sm">
-          <TypographySmall
-            className={`${isCanceled ? 'line-through opacity-50' : ''} ${isSubstitution ? 'text-emerald-600' : ''}`}
-          >
-            {displayTeacher}, sala {displayRoom}
-          </TypographySmall>
         </div>
       </div>
     </Card>
