@@ -34,11 +34,11 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
   const displayRoom = lesson.exception?.newData?.room ?? lesson.room;
   // Kolor paska akcentu po lewej stronie
   const accentColorClass =
-    isCanceled ? 'bg-rose-500/90'
+    isCanceled ? 'bg-red-500/90'
     : isSubstitution ? 'bg-amber-500/90'
     : 'bg-zinc-300 dark:bg-zinc-600/90';
   const bgColorClass =
-    isCanceled ? 'bg-rose-500/15'
+    isCanceled ? 'bg-red-500/15'
     : isSubstitution ? 'bg-amber-500/15'
     : 'bg-zinc-300 dark:bg-zinc-600/5';
   const strikeClass = isCanceled ? 'line-through opacity-50' : '';
