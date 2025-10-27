@@ -32,15 +32,14 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
   const displayEnd = lesson.exception?.newData?.end ?? lesson.end;
   const displayTeacher = lesson.exception?.newData?.teacher ?? lesson.teacher;
   const displayRoom = lesson.exception?.newData?.room ?? lesson.room;
-  // Kolor paska akcentu po lewej stronie
   const accentColorClass =
     isCanceled ? 'bg-red-500/90'
-    : isSubstitution ? 'bg-amber-500/90'
-    : 'bg-zinc-300 dark:bg-zinc-600/90';
+    : isSubstitution ? 'dark:bg-amber-500/90 bg-amber-500/70'
+    : 'dark:bg-zinc-300/50 bg-zinc-400/40';
   const bgColorClass =
-    isCanceled ? 'bg-red-500/15'
-    : isSubstitution ? 'bg-amber-500/15'
-    : 'bg-zinc-300 dark:bg-zinc-600/5';
+    isCanceled ? 'dark:bg-red-500/15 bg-red-500/30'
+    : isSubstitution ? 'dark:bg-amber-500/15 bg-amber-500/30'
+    : 'dark:bg-zinc-500/5 bg-zinc-500/5';
   const strikeClass = isCanceled ? 'line-through opacity-50' : '';
 
   return (
@@ -78,7 +77,7 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
 
           {isCanceled ?
             <Badge
-              variant="outline"
+              variant="default"
               className={`gap-1 select-none ${accentColorClass} absolute right-2`}
             >
               <XCircle className="h-3 w-3" />
@@ -86,7 +85,7 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
             </Badge>
           : isSubstitution ?
             <Badge
-              variant="outline"
+              variant="default"
               className={`gap-1 select-none ${accentColorClass} absolute right-2`}
             >
               <AlertTriangle className="h-3 w-3" /> Zastępstwo
