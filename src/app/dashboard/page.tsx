@@ -3,19 +3,15 @@ import { ExamsCard } from '@/components/exams/exams-card';
 import { GradesCard } from '@/components/grades/grades-card';
 import { ScheduleCard } from '@/components/schedule/schedule-card';
 import { mockScheduleData } from '@/data/mockSchedule';
-import { useSchedule } from '@/hooks/use-schedule';
 
 export default function Home() {
   // Możesz przekazać konkretną datę lub pozostawić puste dla aktualnego czasu
-  const { todaysLessons } = useSchedule(
-    mockScheduleData,
-    '2025-10-20T12:00:00'
-  );
+  const todayDate = new Date().toISOString();
 
   return (
     <DashboardLayout>
       <GradesCard />
-      <ScheduleCard lessons={todaysLessons} />
+      <ScheduleCard scheduleData={mockScheduleData} todayDate={todayDate} />
       <ExamsCard />
     </DashboardLayout>
   );

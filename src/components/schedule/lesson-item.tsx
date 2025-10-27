@@ -39,7 +39,7 @@ export const LessonItem = ({ lesson }: LessonItemProps) => {
   const bgColorClass =
     isCanceled ? 'dark:bg-red-500/15 bg-red-500/30'
     : isSubstitution ? 'dark:bg-amber-500/15 bg-amber-500/30'
-    : 'dark:bg-zinc-500/5 bg-zinc-500/5';
+    : 'dark:bg-zinc-700/5 bg-zinc-300/5';
   const strikeClass = isCanceled ? 'line-through opacity-50' : '';
 
   return (
