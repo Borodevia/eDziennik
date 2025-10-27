@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { stylesFor } from '@/lib/categoryStyles';
 import { useEffect, useRef, useState, type ReactElement } from 'react';
 
 import type { Grade } from '@/app/dashboard/grades/page';
@@ -37,8 +38,6 @@ export default function GradeDialog({
     if (open) setSelected(grades.length ? initialIndex : null);
   }, [open, grades, initialIndex]);
 
-  // prevent Radix/dialog from auto-focusing the first focusable element
-  // (the first grade button). Focus the details panel instead.
   const detailsRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (open) {
@@ -50,6 +49,9 @@ export default function GradeDialog({
   }, [open]);
 
   const current = selected !== null ? grades[selected] : undefined;
+
+  // use centralized styles helper
+  const getStyles = (cat?: string) => stylesFor(cat);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChangeAction}>
@@ -66,39 +68,42 @@ export default function GradeDialog({
               Oceny
             </div>
             <div className="flex flex-col gap-2">
-              {grades.map((g, i) => (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelected(i);
-                  }}
-                  aria-pressed={i === selected}
-                  className={`w-full text-left inline-flex items-center gap-4 rounded-lg px-3 py-2 transition-colors border border-transparent focus:outline-none focus:ring-2 focus:ring-ring ${
-                    i === selected ?
-                      'bg-muted/70 border-border shadow-sm'
-                    : 'hover:bg-muted/30'
-                  }`}
-                >
-                  <Badge
-                    variant="outline"
-                    className="font-semibold text-base p-0 w-10 h-10 flex items-center justify-center"
+              {grades.map((g, i) => {
+                const s = getStyles(g.category);
+                return (
+                  <button
+                    key={i}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelected(i);
+                    }}
+                    aria-pressed={i === selected}
+                    className={`w-full text-left inline-flex items-center gap-4 rounded-lg px-3 py-2 transition-colors border ${
+                      i === selected ?
+                        `border-border bg-muted/70 ${s.selectedTintClasses}`
+                      : 'border-transparent hover:bg-muted/30'
+                    } focus:outline-none focus:ring-2 focus:ring-ring ${s.focusRingClass}`}
                   >
-                    {g.value}
-                  </Badge>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold truncate">
-                      {g.category}
+                    <Badge
+                      variant="outline"
+                      className={`font-semibold text-base p-0 w-10 h-10 flex items-center justify-center ${s.badgeClasses}`}
+                    >
+                      {g.value}
+                    </Badge>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold truncate">
+                        {g.category}
+                      </div>
+                      <div className="text-xs text-muted-foreground truncate">
+                        {g.teacher ?? ''}
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground truncate">
-                      {g.teacher ?? ''}
+                    <div className="text-xs text-muted-foreground">
+                      {g.date ?? ''}
                     </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {g.date ?? ''}
-                  </div>
-                </button>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           </Card>
 
@@ -113,7 +118,9 @@ export default function GradeDialog({
                   ref={detailsRef}
                   tabIndex={-1}
                 >
-                  <div className="text-8xl sm:text-6xl font-extrabold leading-none w-28 flex items-center justify-center">
+                  <div
+                    className={`text-8xl sm:text-6xl font-extrabold leading-none w-28 flex items-center justify-center ${getStyles(current?.category).bigGradeClass}`}
+                  >
                     {current.value}
                   </div>
                   <div className="flex-1 min-w-0">

@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { stylesFor } from '@/lib/categoryStyles';
 import { useState, type ReactElement } from 'react';
 import { Card } from '../ui/card';
 import GradeDialog from './grade-dialog';
@@ -75,6 +76,9 @@ function Subject({
     setDisableRowAnim(true);
     setDialogOpen(true);
   };
+
+  // use centralized styles
+  const getStyles = (cat?: string) => stylesFor(cat);
 
   return (
     <motion.div
@@ -139,10 +143,12 @@ function Subject({
                           openDialogFor(gidx);
                         }}
                       >
-                        <TableCell className="cursor-pointer">
+                        <TableCell
+                          className={`cursor-pointer ${getStyles(grade.category).rowAccentClasses}`}
+                        >
                           {grade.value}
                         </TableCell>
-                        <TableCell className="cursor-pointer">
+                        <TableCell className="cursor-pointer px-2 py-1">
                           {grade.category}
                         </TableCell>
                         <TableCell className="cursor-pointer">
@@ -170,7 +176,9 @@ function Subject({
                       <Badge
                         asChild={false}
                         variant="outline"
-                        className="font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+                        className={`font-semibold text-sm p-3 aspect-square rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition duration-150 ${
+                          getStyles(grade.category).badgeClasses
+                        }`}
                         onClick={(e) => {
                           e.stopPropagation();
                           e.preventDefault();
