@@ -45,9 +45,8 @@ export default function Page({
             </Breadcrumb>
           </div>
         </header>
-      {children}
+        {children}
       </SidebarInset>
-
     </SidebarProvider>
   );
 }

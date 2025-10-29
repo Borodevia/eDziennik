@@ -1,10 +1,15 @@
 'use client';
 import { Card } from '@/components/ui/card';
-import { TypographyH2, TypographyLead } from '@/components/ui/typography';
+import {
+  TypographyH2,
+  TypographyLead,
+  TypographyMedium,
+} from '@/components/ui/typography';
 import { useSchedule } from '@/hooks/use-schedule';
 import { ScheduleData } from '@/types/schedule';
 import { addDays, format, parseISO, subDays } from 'date-fns';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { ButtonGroup } from '../ui/button-group';
@@ -20,8 +25,11 @@ export const ScheduleCard = ({
   todayDate,
 }: ScheduleCardProps) => {
   // Przechowuj datę w formacie ISO (yyyy-MM-dd)
+  const normalizedToday =
+    todayDate ? format(parseISO(todayDate), 'yyyy-MM-dd') : undefined;
+
   const [selectedDate, setSelectedDate] = useState<string | undefined>(
-    todayDate
+    normalizedToday
   );
 
   // Pobierz lekcje dla wybranej daty
@@ -30,6 +38,12 @@ export const ScheduleCard = ({
   // Formatuj do wyświetlenia
   const formattedDate =
     selectedDate ? format(parseISO(selectedDate), 'dd.MM.yyyy') : '';
+
+  const handleToday = () => {
+    if (normalizedToday) {
+      setSelectedDate(normalizedToday);
+    }
+  };
 
   const handlePreviousDay = () => {
     if (selectedDate) {
@@ -48,7 +62,6 @@ export const ScheduleCard = ({
     <Card className="row-span-2 p-6 flex flex-col min-h-0">
       <TypographyH2 className="mb-4">Plan Lekcji</TypographyH2>
       <div className="flex justify-between">
-        <TypographyLead className="">{formattedDate}</TypographyLead>
         <ButtonGroup>
           <ButtonGroup>
             <Button variant="outline" size="icon" onClick={handlePreviousDay}>
@@ -58,7 +71,25 @@ export const ScheduleCard = ({
               <ArrowRight />
             </Button>
           </ButtonGroup>
+          <AnimatePresence initial={false} mode="wait">
+            {selectedDate !== normalizedToday && (
+              <motion.div
+                key="today-btn"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <ButtonGroup>
+                  <Button variant="outline" onClick={handleToday}>
+                    <TypographyMedium>Dzisiaj</TypographyMedium>
+                  </Button>
+                </ButtonGroup>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </ButtonGroup>
+        <TypographyLead className="">{formattedDate}</TypographyLead>
       </div>
       <div className="flex flex-col overflow-y-auto gap-2">
         {todaysLessons.length > 0 ?
