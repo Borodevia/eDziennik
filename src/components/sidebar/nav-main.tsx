@@ -20,7 +20,7 @@ export function NavMain() {
           <SidebarMenuButton
             tooltip="Dashboard"
             asChild
-            isActive={navpath == '/dashboard'}
+            isActive={navpath === '/dashboard'}
           >
             <a href="/dashboard">
               <HomeIcon />
