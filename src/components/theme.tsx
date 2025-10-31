@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { ThemeProvider as NextThemesProvider, useTheme } from 'next-themes';
 export function ModeToggle() {
   const { setTheme } = useTheme();
   return (
@@ -32,4 +32,11 @@ export function ModeToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+}
+
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
